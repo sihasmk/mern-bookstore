@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
 
 // MongoDB Configurations
 
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri =
   "mongodb+srv://mern-bookstore:VrMKy9eQ0w2YKJPJ@cluster0.fnv8vwr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -30,6 +30,61 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+
+    // Create a collection of documents
+    const bookCollection = client.db("BookInventory").collection("books");
+
+    // Insert book to the above created db using POST method
+    app.post("/upload-book", async (req, res) => {
+      const data = req.body;
+      const result = await bookCollection.insertOne(data);
+
+      res.send(result);
+    });
+
+    // Get all books from the db.
+    app.get("/all-books", async (req, res) => {
+      const category = req.query?.category;
+      let query = category ? { category: category } : {};
+
+      const books = bookCollection.find(query);
+      const result = await books.toArray();
+
+      res.send(result);
+    });
+
+    // Update data of a book in the database
+    app.patch("/book/:id", async (req, res) => {
+      const id = req.params.id;
+      const updatedBookData = req.body;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+
+      const updatedDoc = {
+        $set: {
+          ...updatedBookData,
+        },
+      };
+
+      const result = await bookCollection.updateOne(
+        filter,
+        updatedDoc,
+        options
+      );
+
+      res.send(result);
+    });
+
+    // Delete a book from the database
+    app.delete("/book/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+
+      const result = await bookCollection.deleteOne(query);
+
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(

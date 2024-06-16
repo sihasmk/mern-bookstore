@@ -1,0 +1,51 @@
+.banner .swiper {
+  width: 240px;
+  height: 320px;
+}
+
+.banner .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.banner .swiper-slide:nth-child(1n) {
+  background-image: url(../assets/banner-images/annie-bot.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.banner .swiper-slide:nth-child(2n) {
+  background-image: url(../assets/banner-images/home-is-where-the-bodies-are.jpg);
+  background-size: cover;
+}
+
+.banner .swiper-slide:nth-child(3n) {
+  background-image: url(../assets/banner-images/yellowface.jpg);
+  background-size: cover;
+}
+
+.banner .swiper-slide:nth-child(4n) {
+  background-image: url(../assets/banner-images/just-for-the-summer.jpg);
+  background-size: cover;
+}
+
+.banner .swiper-slide:nth-child(5n) {
+  background-image: url(../assets/banner-images/my-darling-dreadful-thing.jpg);
+  background-size: cover;
+}
+
+.banner .swiper-slide:nth-child(6n) {
+  background-image: url(../assets/banner-images/one-perfect-couple.jpg);
+  background-size: cover;
+}
+
+.banner .swiper-slide:nth-child(7n) {
+  background-image: url(../assets/banner-images/spin-of-fate.jpg);
+  background-size: cover;
+}
