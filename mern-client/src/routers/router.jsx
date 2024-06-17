@@ -1,10 +1,9 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import App from "../App.jsx";
 import Home from "../home/Home.jsx";
 import Shop from "../shop/Shop.jsx";
 import About from "../components/About.jsx";
 import Blog from "../components/Blog.jsx";
-import Book from "../components/Book.jsx";
 import SingleBook from "./../components/SingleBook";
 
 const router = createBrowserRouter([

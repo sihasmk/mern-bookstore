@@ -1,17 +1,18 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import { Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar";
 
-function App() {
-  const [count, setCount] = useState(0);
+// Flowbite React Components
+import MyFooter from "./components/MyFooter";
 
+function App() {
   return (
     <>
       <Navbar />
-      <Outlet />
+      <div className="min-h-screen">
+        <Outlet />
+      </div>
+      <MyFooter />
     </>
   );
 }

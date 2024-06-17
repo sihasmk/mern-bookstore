@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import { FaBlog } from "react-icons/fa";
 import { FaBarsStaggered, FaXmark } from "react-icons/fa6";
 
+// Flowbite React components
+import { Flowbite, DarkThemeToggle } from "flowbite-react";
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
@@ -54,7 +57,6 @@ const Navbar = () => {
             <FaBlog className="inline-block" />
             Books
           </Link>
-
           {/* Nav Items */}
           <ul className="md:flex space-x-12 hidden">
             {navItems.map(({ link, path }) => {
@@ -68,14 +70,12 @@ const Navbar = () => {
               );
             })}
           </ul>
-
           {/* Button for large devices */}
           <div className="space-x-12 hidden lg:flex items-center">
             <button>
               <FaBarsStaggered className="w-5 hover:text-blue-700" />
             </button>
           </div>
-
           {/* Menu button for mobile devices */}
           <div className="md:hidden">
             <button
@@ -89,7 +89,6 @@ const Navbar = () => {
               )}
             </button>
           </div>
-
           {/* Nav items for mobile devices */}
           <div
             className={`space-y-4 px-4 mt-12 py-7 bg-blue-700 ${
