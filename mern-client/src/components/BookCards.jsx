@@ -63,7 +63,7 @@ const BookCards = ({ books, headline }) => {
                       </h1>
                       <p className="text-lg text-gray-900">{book.authorName}</p>
                     </div>
-                    <div className="text-base">$10.00</div>
+                    <div className="text-base">${book.price}</div>
                   </div>
                 </div>
               </Link>
