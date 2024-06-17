@@ -1,6 +1,7 @@
 .banner .swiper {
   width: 240px;
   height: 320px;
+  position: relative;
 }
 
 .banner .swiper-slide {

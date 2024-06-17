@@ -53,6 +53,17 @@ async function run() {
       res.send(result);
     });
 
+    // Get a single book's data from the db.
+    app.get("/book/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+
+      const book = bookCollection.findOne(query);
+      const result = await book;
+
+      res.send(result);
+    });
+
     // Update data of a book in the database
     app.patch("/book/:id", async (req, res) => {
       const id = req.params.id;

@@ -6,14 +6,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-cards";
 
-import "./BannerCard.css";
+import "../stylesheets/BannerCard.css";
 
 // import required modules
 import { EffectCards } from "swiper/modules";
 
 const BannerCard = () => {
   return (
-    <div className="banner">
+    <div className="banner pr-24">
       <Swiper
         effect={"cards"}
         grabCursor={true}
