@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Import images needed
 import profileImg from "../assets/other-images/profile.jpg";
@@ -18,10 +18,23 @@ import "swiper/css/pagination";
 
 import "../stylesheets/BookCards.css";
 
-// import required modules
+// Import required modules
 import { Pagination } from "swiper/modules";
 
+// Import required functions
+import { renderStars } from "../functions/renderStars";
+
 const Reviews = () => {
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/all-reviews")
+      .then((response) => response.json())
+      .then((data) => {
+        setReviews(data.slice(0, 10));
+      });
+  }, []);
+
   return (
     <div className="my-12 px-4 lg:px-24">
       <h2 className="text-4xl text-black font-bold text-center mb-8">
@@ -29,195 +42,50 @@ const Reviews = () => {
       </h2>
       <Swiper
         slidesPerView={1}
-        spaceBetween={30}
+        spaceBetween={10}
         pagination={{
           clickable: true,
         }}
         breakpoints={{
           640: {
-            slidesPerView: 1,
+            slidesPerView: 2,
             spaceBetween: 20,
           },
           768: {
             slidesPerView: 3,
-            spaceBetween: 40,
+            spaceBetween: 30,
           },
           1024: {
             slidesPerView: 4,
-            spaceBetween: 50,
+            spaceBetween: 40,
           },
         }}
         modules={[Pagination]}
         className="mySwiper"
       >
-        <SwiperSlide className="shadow-2xl bg-white py-8 px-4 md:m-5 rounded-lg border">
-          <div className="space-y-4">
-            <div className="text-amber-400 flex gap-1">
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
+        {reviews.map((review) => (
+          <SwiperSlide key={review._id} className="">
+            <div className="space-y-4 shadow-2xl bg-white py-8 px-4 md:m-5 rounded-lg border">
+              <div className="text-amber-400 flex gap-1">
+                {renderStars(review.rating).map((bit) =>
+                  bit ? <MdOutlineStarPurple500 /> : <MdOutlineStarOutline />
+                )}
+              </div>
+              <div>
+                <p className="mt-3">{review.comment}</p>
+                <Avatar
+                  img={review.profilePicURL}
+                  rounded
+                  className="w-10 mt-3"
+                />
+                <h1 className="text-xl font-bold text-black my-1">
+                  {review.customerName}
+                </h1>
+                <p>{review.occupation}</p>
+              </div>
             </div>
-            <div>
-              <p className="mt-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio,
-                deserunt ab aspernatur cum quod quam cumque sed ex consequuntur
-                necessitatibus veritatis recusandae pariatur perspiciatis? Odio,
-                debitis! Deserunt odio voluptatem officiis!
-              </p>
-              <Avatar img={profileImg} rounded className="w-10 mt-3" />
-              <h1 className="text-xl font-bold text-black my-1">Mark Ping</h1>
-              <p>CEO, ABC Company</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide className="shadow-2xl bg-white py-8 px-4 md:m-5 rounded-lg border">
-          <div className="space-y-4">
-            <div className="text-amber-400 flex gap-1">
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-            </div>
-            <div>
-              <p className="mt-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio,
-                deserunt ab aspernatur cum quod quam cumque sed ex consequuntur
-                necessitatibus veritatis recusandae pariatur perspiciatis? Odio,
-                debitis! Deserunt odio voluptatem officiis!
-              </p>
-              <Avatar img={profileImg} rounded className="w-10 mt-3" />
-              <h1 className="text-xl font-bold text-black my-1">Mark Ping</h1>
-              <p>CEO, ABC Company</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide className="shadow-2xl bg-white py-8 px-4 md:m-5 rounded-lg border">
-          <div className="space-y-4">
-            <div className="text-amber-400 flex gap-1">
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-            </div>
-            <div>
-              <p className="mt-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio,
-                deserunt ab aspernatur cum quod quam cumque sed ex consequuntur
-                necessitatibus veritatis recusandae pariatur perspiciatis? Odio,
-                debitis! Deserunt odio voluptatem officiis!
-              </p>
-              <Avatar img={profileImg} rounded className="w-10 mt-3" />
-              <h1 className="text-xl font-bold text-black my-1">Mark Ping</h1>
-              <p>CEO, ABC Company</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide className="shadow-2xl bg-white py-8 px-4 md:m-5 rounded-lg border">
-          <div className="space-y-4">
-            <div className="text-amber-400 flex gap-1">
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-            </div>
-            <div>
-              <p className="mt-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio,
-                deserunt ab aspernatur cum quod quam cumque sed ex consequuntur
-                necessitatibus veritatis recusandae pariatur perspiciatis? Odio,
-                debitis! Deserunt odio voluptatem officiis!
-              </p>
-              <Avatar img={profileImg} rounded className="w-10 mt-3" />
-              <h1 className="text-xl font-bold text-black my-1">Mark Ping</h1>
-              <p>CEO, ABC Company</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide className="shadow-2xl bg-white py-8 px-4 md:m-5 rounded-lg border">
-          <div className="space-y-4">
-            <div className="text-amber-400 flex gap-1">
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-            </div>
-            <div>
-              <p className="mt-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio,
-                deserunt ab aspernatur cum quod quam cumque sed ex consequuntur
-                necessitatibus veritatis recusandae pariatur perspiciatis? Odio,
-                debitis! Deserunt odio voluptatem officiis!
-              </p>
-              <Avatar img={profileImg} rounded className="w-10 mt-3" />
-              <h1 className="text-xl font-bold text-black my-1">Mark Ping</h1>
-              <p>CEO, ABC Company</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide className="shadow-2xl bg-white py-8 px-4 md:m-5 rounded-lg border">
-          <div className="space-y-4">
-            <div className="text-amber-400 flex gap-1">
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-            </div>
-            <div>
-              <p className="mt-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio,
-                deserunt ab aspernatur cum quod quam cumque sed ex consequuntur
-                necessitatibus veritatis recusandae pariatur perspiciatis? Odio,
-                debitis! Deserunt odio voluptatem officiis!
-              </p>
-              <Avatar img={profileImg} rounded className="w-10 mt-3" />
-              <h1 className="text-xl font-bold text-black my-1">Mark Ping</h1>
-              <p>CEO, ABC Company</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide className="shadow-2xl bg-white py-8 px-4 md:m-5 rounded-lg border">
-          <div className="space-y-4">
-            <div className="text-amber-400 flex gap-1">
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-            </div>
-            <div>
-              <p className="mt-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio,
-                deserunt ab aspernatur cum quod quam cumque sed ex consequuntur
-                necessitatibus veritatis recusandae pariatur perspiciatis? Odio,
-                debitis! Deserunt odio voluptatem officiis!
-              </p>
-              <Avatar img={profileImg} rounded className="w-10 mt-3" />
-              <h1 className="text-xl font-bold text-black my-1">Mark Ping</h1>
-              <p>CEO, ABC Company</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide className="shadow-2xl bg-white py-8 px-4 md:m-5 rounded-lg border">
-          <div className="space-y-4">
-            <div className="text-amber-400 flex gap-1">
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-              <MdOutlineStarPurple500 />
-            </div>
-            <div>
-              <p className="mt-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio,
-                deserunt ab aspernatur cum quod quam cumque sed ex consequuntur
-                necessitatibus veritatis recusandae pariatur perspiciatis? Odio,
-                debitis! Deserunt odio voluptatem officiis!
-              </p>
-              <Avatar img={profileImg} rounded className="w-10 mt-3" />
-              <h1 className="text-xl font-bold text-black my-1">Mark Ping</h1>
-              <p>CEO, ABC Company</p>
-            </div>
-          </div>
-        </SwiperSlide>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );

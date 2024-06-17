@@ -31,8 +31,9 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
-    // Create a collection of documents
+    // Create a collection of books and reviews
     const bookCollection = client.db("BookInventory").collection("books");
+    const reviewCollection = client.db("CustomerReviews").collection("reviews");
 
     // Insert book to the above created db using POST method
     app.post("/upload-book", async (req, res) => {
@@ -42,13 +43,40 @@ async function run() {
       res.send(result);
     });
 
-    // Get all books from the db.
+    // Insert a review to the above created db using POST method
+    app.post("/post-review", async (req, res) => {
+      const data = req.body;
+      const result = await reviewCollection.insertOne(data);
+
+      res.send(result);
+    });
+
+    // Add many reviews at once: just to get dummy data.
+    app.post("/add-reviews", async (req, res) => {
+      const data = req.body;
+      const result = await reviewCollection.insertMany(data);
+
+      res.send(result);
+    });
+
+    // Get all books from the db and optionally filter them.
     app.get("/all-books", async (req, res) => {
       const category = req.query?.category;
       let query = category ? { category: category } : {};
 
       const books = bookCollection.find(query);
       const result = await books.toArray();
+
+      res.send(result);
+    });
+
+    // Get all reviews from the db.
+    app.get("/all-reviews", async (req, res) => {
+      const rating = req.query?.rating;
+      let query = rating ? { rating: parseInt(rating) } : {};
+
+      const reviews = reviewCollection.find(query);
+      const result = await reviews.toArray();
 
       res.send(result);
     });
@@ -92,6 +120,16 @@ async function run() {
       const query = { _id: new ObjectId(id) };
 
       const result = await bookCollection.deleteOne(query);
+
+      res.send(result);
+    });
+
+    // Delete a review from the database
+    app.delete("/review/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+
+      const result = await reviewCollection.deleteOne(query);
 
       res.send(result);
     });
