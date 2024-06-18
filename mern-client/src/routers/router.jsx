@@ -9,6 +9,7 @@ import Dashboard from "../dashboard/Dashboard.jsx";
 import DashboardLayout from "../dashboard/DashboardLayout.jsx";
 import UploadBook from "../dashboard/UploadBook.jsx";
 import ManageBooks from "../dashboard/ManageBooks.jsx";
+import EditBook from "../dashboard/EditBook.jsx";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,12 @@ const router = createBrowserRouter([
       {
         path: "/admin/dashboard/manage",
         element: <ManageBooks />,
+      },
+      {
+        path: "/admin/dashboard/edit-book/:id",
+        element: <EditBook />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/book/${params.id}`),
       },
     ],
   },

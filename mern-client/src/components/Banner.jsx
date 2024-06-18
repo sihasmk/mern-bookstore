@@ -20,13 +20,13 @@ const Banner = () => {
             quos labore ipsam reprehenderit necessitatibus amet vel nisi laborum
             a accusantium fugiat!
           </p>
-          <div className="space-x-1">
+          <div className="space-x-1 items-center">
             <input
               type="search"
               name="search"
               id="search"
-              placeholder="Search a book"
-              className="py-2 px-2 rounded-s-sm outline-none"
+              placeholder="Search for a book"
+              className="py-2 px-2 rounded outline-none"
             />
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-all ease-in duration-100">
               Search
