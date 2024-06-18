@@ -44,7 +44,7 @@ const Navbar = () => {
   return (
     <header className="w-full bg-transparent fixed top-0 left-0 right-0 transition-all ease-in duration-300 z-10">
       <nav
-        className={`py-4 px-24 ${
+        className={`py-4 px-16 ${
           isSticky ? "sticky top-0 left-0 right-0 bg-blue-300" : ""
         }`}
       >

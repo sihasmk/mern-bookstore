@@ -17,7 +17,7 @@ import { FaCartShopping } from "react-icons/fa6";
 
 const BookCards = ({ books, headline }) => {
   return (
-    <div className="mt-12 px-4 lg:px-24">
+    <div className="mt-12 px-4 lg:px-16">
       {/* Heading */}
       <h1 className="text-4xl text-center font-bold text-black mb-8 mt-0">
         {headline}

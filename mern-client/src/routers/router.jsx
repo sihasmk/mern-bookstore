@@ -5,6 +5,10 @@ import Shop from "../shop/Shop.jsx";
 import About from "../components/About.jsx";
 import Blog from "../components/Blog.jsx";
 import SingleBook from "./../components/SingleBook";
+import Dashboard from "../dashboard/Dashboard.jsx";
+import DashboardLayout from "../dashboard/DashboardLayout.jsx";
+import UploadBook from "../dashboard/UploadBook.jsx";
+import ManageBooks from "../dashboard/ManageBooks.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +36,24 @@ const router = createBrowserRouter([
         element: <SingleBook />,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/book/${params.id}`),
+      },
+    ],
+  },
+  {
+    path: "/admin/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: "/admin/dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "/admin/dashboard/upload",
+        element: <UploadBook />,
+      },
+      {
+        path: "/admin/dashboard/manage",
+        element: <ManageBooks />,
       },
     ],
   },

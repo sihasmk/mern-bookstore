@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const FavBook = () => {
   return (
-    <div className="px-4 lg:px-24 my-20 flex flex-col sm:flex-row justify-between items-center">
+    <div className="px-4 lg:px-16 my-20 flex flex-col sm:flex-row justify-between items-center">
       <div className="md:w-1/2">
         <img
           src={FavBookImg}

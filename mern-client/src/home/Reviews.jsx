@@ -36,7 +36,7 @@ const Reviews = () => {
   }, []);
 
   return (
-    <div className="my-12 px-4 lg:px-24">
+    <div className="my-12 px-4 lg:px-16">
       <h2 className="text-4xl text-black font-bold text-center mb-8">
         Our Customers
       </h2>
@@ -64,11 +64,15 @@ const Reviews = () => {
         className="mySwiper"
       >
         {reviews.map((review) => (
-          <SwiperSlide key={review._id} className="">
+          <SwiperSlide key={review._id}>
             <div className="space-y-4 shadow-2xl bg-white py-8 px-4 md:m-5 rounded-lg border">
               <div className="text-amber-400 flex gap-1">
-                {renderStars(review.rating).map((bit) =>
-                  bit ? <MdOutlineStarPurple500 /> : <MdOutlineStarOutline />
+                {renderStars(review.rating).map((bit, index) =>
+                  bit ? (
+                    <MdOutlineStarPurple500 key={index} />
+                  ) : (
+                    <MdOutlineStarOutline key={index} />
+                  )
                 )}
               </div>
               <div>
