@@ -15,8 +15,12 @@ import { PiSignInBold, PiSignOutBold } from "react-icons/pi";
 
 import profilePic from "../assets/other-images/profile.jpg";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { authContext } from "../context/AuthProvider";
 
 const MySidebar = () => {
+  const { user } = useContext(authContext);
+  console.log(user);
   return (
     <Sidebar aria-label="Sidebar with logo branding example">
       <Link
@@ -26,8 +30,12 @@ const MySidebar = () => {
         <FaBlog className="w-6 h-6" />
         <h1 className="text-3xl text-black font-bold">Books</h1>
       </Link>
-      <Sidebar.Logo href="#" img={profilePic} imgAlt="Flowbite logo">
-        Admin
+      <Sidebar.Logo
+        href="#"
+        img={user?.photoURL || profilePic}
+        imgAlt="Flowbite logo"
+      >
+        {user?.displayName || "Admin"}
       </Sidebar.Logo>
       <Sidebar.Items>
         <Sidebar.ItemGroup>

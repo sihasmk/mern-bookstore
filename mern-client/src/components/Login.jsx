@@ -1,21 +1,23 @@
 import React, { useContext, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-// Import Flowbite React Components
-import { Button, Label, TextInput } from "flowbite-react";
-
-// Import authentication
+// Import Flowbite React components
+import { Button, Checkbox, Label, TextInput, Alert } from "flowbite-react";
 import { authContext } from "../context/AuthProvider";
-import { GoogleAuthProvider } from "firebase/auth";
+import { useLocation, useNavigate } from "react-router-dom";
+
+// Import React Icons
+import { HiInformationCircle } from "react-icons/hi";
 
 // Import stylesheets
 import "../stylesheets/LoginAndSignUp.css";
 
 // Import images
 import googleLogo from "../assets/other-images/google-logo.svg";
+import { GoogleAuthProvider } from "firebase/auth";
 
-const SignUp = () => {
-  const { createUser, signUpWithGoogle } = useContext(authContext);
+const Login = () => {
+  const { logIn, signUpWithGoogle } = useContext(authContext);
   const [error, setError] = useState("");
 
   const location = useLocation();
@@ -23,7 +25,7 @@ const SignUp = () => {
 
   const from = location.state?.from?.pathname || "/";
 
-  const handleSignUp = (event) => {
+  const handleLogin = (event) => {
     event.preventDefault();
 
     const form = event.target;
@@ -31,22 +33,23 @@ const SignUp = () => {
     const email = form.email.value;
     const password = form.password.value;
 
-    createUser(email, password)
+    logIn(email, password)
       .then((userCredential) => {
-        // Signed up
+        // Signed in
         const user = userCredential.user;
-        alert("Signed up successfully!");
+        alert("Logged in successfully!");
         navigate(from, { replace: true });
         // ...
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+      .catch((err) => {
+        const errorCode = err.code;
+        const errorMessage = err.message;
         setError(errorMessage);
+        console.log([errorCode, errorMessage]);
       });
   };
 
-  const handleGoogleSignUp = () => {
+  const handleGoogleLogIn = () => {
     signUpWithGoogle()
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
@@ -60,63 +63,75 @@ const SignUp = () => {
         // IdP data available using getAdditionalUserInfo(result)
         // ...
       })
-      .catch((error) => {
+      .catch((err) => {
         // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData?.email;
+        const errorCode = err.code;
+        const errorMessage = err.message;
+        setError({ errorCode, errorMessage });
         // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        const credential = GoogleAuthProvider.credentialFromError(err);
         // ...
       });
   };
 
+  console.log(error);
+
   return (
-    <div className="relative h-screen w-screen">
-      <div className="py-10 px-20 bg-blue-200 rounded flex lg:w-[450px] md:w-[380px]  flex-col gap-4 absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%]">
-        <form onSubmit={handleSignUp} className="flex max-w-md flex-col gap-4">
+    <div className="h-screen bg-teal-100 flex items-center justify-center">
+      <div className="py-10 px-20 bg-blue-200 rounded flex lg:w-[450px] md:w-[380px]  flex-col gap-4 ">
+        <form className="flex flex-col gap-4" onSubmit={handleLogin}>
           <div>
             <div className="mb-2 block">
-              <Label htmlFor="email" value="Email" />
+              <Label htmlFor="email" value="Your email" />
             </div>
             <TextInput
               id="email"
               type="email"
+              name="email"
               placeholder="name@flowbite.com"
               required
-              shadow
             />
           </div>
           <div>
             <div className="mb-2 block">
-              <Label htmlFor="password" value="Password" />
+              <Label htmlFor="password" value="Your password" />
             </div>
-            <TextInput id="password" type="password" required shadow />
+            <TextInput id="password" name="password" type="password" required />
           </div>
           <div className="flex items-center gap-2">
+            <Checkbox id="remember" />
+            <Label htmlFor="remember">Remember me</Label>
+          </div>
+          {error && (
+            <Alert color="failure" icon={HiInformationCircle}>
+              <span className={"font-medium"}>Info alert!</span> Change a few
+              things up and try submitting again.
+            </Alert>
+          )}
+
+          <div className="flex items-center gap-2">
             <Label className="flex font-normal">
-              If you already have an account,&nbsp;
+              If you don't have an account,&nbsp;
               <Link
-                to="/login"
+                to="/sign-up"
                 className="text-cyan-600 font-semibold hover:underline dark:text-cyan-500"
               >
-                login here
+                sign-up here
               </Link>
             </Label>
           </div>
-          <Button type="submit">Register new account</Button>
+          <Button type="submit">Login</Button>
         </form>
         <hr className="hr-text gradient" data-content="OR" />
         <div className="flex justify-center">
-          <button onClick={handleGoogleSignUp}>
+          <button onClick={handleGoogleLogIn}>
             <div className="flex items-center">
               <img
                 src={googleLogo}
-                className="w-[50px] border hover:bg-gray-200"
+                className="w-[50px] border border-blue-300 rounded-sm hover:bg-blue-300"
               />
-              <div className="border p-[12px] hover:bg-gray-200">
-                Sign up with Google
+              <div className="border border-blue-300 rounded-sm font-semibold p-[12px] hover:bg-blue-300">
+                Log in with Google
               </div>
             </div>
           </button>
@@ -126,4 +141,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;

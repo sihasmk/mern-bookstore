@@ -1,14 +1,13 @@
 import React, { useContext, useRef } from "react";
 import { authContext } from "../context/AuthProvider";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 // Import Flowbite React Components
 import { Spinner } from "flowbite-react";
 
-const PrivateRoute = ({ children }) => {
+const PublicRoute = ({ children }) => {
   const { user, loading } = useContext(authContext);
   const alertRef = useRef(false);
-
   const location = useLocation();
 
   if (loading) {
@@ -19,15 +18,15 @@ const PrivateRoute = ({ children }) => {
     );
   }
 
-  if (!user && location.pathname === "/logout") {
-    return <Navigate to="/" state={{ from: location }} replace></Navigate>;
-  }
-
   if (user) {
-    return children;
+    if (!alertRef.current) {
+      alertRef.current = true;
+      alert(`You are already logged in with ${user.email}`);
+    }
+    return <Navigate to="/" state={{ from: location }} replace />;
   }
 
-  return <Navigate to="/login" state={{ from: location }} replace></Navigate>;
+  return children;
 };
 
-export default PrivateRoute;
+export default PublicRoute;
