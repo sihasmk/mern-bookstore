@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import { Button, Label, Select, TextInput, Textarea } from "flowbite-react";
-import App from "./../App";
 
 const UploadBook = () => {
   const bookCategories = [
@@ -34,7 +33,7 @@ const UploadBook = () => {
     bookCategories[0]
   );
 
-  const handleChangeSelectedBookCategory = (event) => {
+  const handleBookCategoryChange = (event) => {
     setSelectedBookCategory(event.target.value);
   };
 
@@ -123,7 +122,7 @@ const UploadBook = () => {
                 id="category"
                 required
                 value={selectedBookCategory}
-                onChange={handleChangeSelectedBookCategory}
+                onChange={handleBookCategoryChange}
               >
                 {bookCategories.map((category) => (
                   <option key={category}>{category}</option>
@@ -148,7 +147,7 @@ const UploadBook = () => {
         <div className="flex gap-8">
           <div className="lg:w-1/3">
             <div className="mb-2 block">
-              <Label htmlFor="price" value="Book Price" />
+              <Label htmlFor="price" value="Book Price (in dollars)" />
             </div>
             <TextInput
               id="price"

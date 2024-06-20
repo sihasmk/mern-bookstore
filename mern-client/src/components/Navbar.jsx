@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // React Icons
@@ -6,9 +6,10 @@ import { FaBlog } from "react-icons/fa";
 import { FaBarsStaggered, FaXmark } from "react-icons/fa6";
 
 // Flowbite React components
-import { Flowbite, DarkThemeToggle } from "flowbite-react";
+import { authContext } from "../context/AuthProvider";
 
 const Navbar = () => {
+  const { user } = useContext(authContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
 
@@ -70,12 +71,14 @@ const Navbar = () => {
               );
             })}
           </ul>
+
           {/* Button for large devices */}
           <div className="space-x-12 hidden lg:flex items-center">
             <button>
               <FaBarsStaggered className="w-5 hover:text-blue-700" />
             </button>
           </div>
+          {user ? user.email : ""}
           {/* Menu button for mobile devices */}
           <div className="md:hidden">
             <button
